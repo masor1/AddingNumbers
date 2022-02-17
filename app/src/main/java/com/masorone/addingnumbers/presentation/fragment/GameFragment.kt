@@ -9,7 +9,6 @@ import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.data.repository.GameRepositoryImpl
 import com.masorone.addingnumbers.databinding.FragmentGameBinding
 import com.masorone.addingnumbers.domain.entity.GameResult
-import com.masorone.addingnumbers.domain.entity.GameSettings
 import com.masorone.addingnumbers.domain.entity.Level
 
 class GameFragment : Fragment() {
@@ -47,7 +46,9 @@ class GameFragment : Fragment() {
                     true,
                     10,
                     10,
-                    GameRepositoryImpl.getGameSettings(level)))
+                    GameRepositoryImpl.getGameSettings(level)
+                )
+            )
         }
     }
 
@@ -57,7 +58,9 @@ class GameFragment : Fragment() {
     }
 
     private fun parseArgs() {
-        level = requireArguments().getSerializable(KEY_LEVEL) as Level
+        requireArguments().getParcelable<Level>(KEY_LEVEL)?.let {
+            level = it
+        }
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
@@ -76,7 +79,7 @@ class GameFragment : Fragment() {
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_LEVEL, level)
+                    putParcelable(KEY_LEVEL, level)
                 }
             }
         }
