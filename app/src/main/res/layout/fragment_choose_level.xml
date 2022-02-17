@@ -33,7 +33,7 @@
         android:text="@string/easy_level" />
 
     <Button
-        android:id="@+id/button_level_normal"
+        android:id="@+id/button_level_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
