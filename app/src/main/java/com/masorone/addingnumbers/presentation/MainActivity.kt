@@ -1,7 +1,8 @@
-package com.masorone.addingnumbers
+package com.masorone.addingnumbers.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.masorone.addingnumbers.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
