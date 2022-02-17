@@ -1,18 +1,14 @@
 package com.masorone.addingnumbers.presentation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import com.masorone.addingnumbers.R
-import com.masorone.addingnumbers.databinding.FragmentChooseLevelBinding
-import com.masorone.addingnumbers.databinding.FragmentGameBinding
 import com.masorone.addingnumbers.databinding.FragmentGameFinishedBinding
 import com.masorone.addingnumbers.domain.entity.GameResult
-import com.masorone.addingnumbers.domain.entity.GameSettings
 
 class GameFinishedFragment : Fragment() {
 
@@ -60,7 +56,9 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun parseParams() {
-        gameResult = requireArguments().getSerializable(KEY_GAME_RESULT) as GameResult
+        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
+            gameResult = it
+        }
     }
 
     private fun retryGame() {
@@ -78,7 +76,7 @@ class GameFinishedFragment : Fragment() {
 
         fun newInstance(gameResult: GameResult) = GameFinishedFragment().apply {
             arguments = Bundle().apply {
-                putSerializable(KEY_GAME_RESULT, gameResult)
+                putParcelable(KEY_GAME_RESULT, gameResult)
             }
         }
     }

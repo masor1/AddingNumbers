@@ -1,7 +1,7 @@
 package com.masorone.addingnumbers.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.masorone.addingnumbers.R
 
 class MainActivity : AppCompatActivity() {
