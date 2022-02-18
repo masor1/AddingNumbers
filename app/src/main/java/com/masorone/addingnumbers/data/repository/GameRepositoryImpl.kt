@@ -16,8 +16,8 @@ object GameRepositoryImpl : GameRepository {
     override fun generateQuestion(maxSumValue: Int, countOfOption: Int): Question {
         val sum = Random.nextInt(MIN_SUM_VALUE, maxSumValue + 1)
         val visibleNumber = Random.nextInt(MIN_VISIBLE_VALUE, sum)
-        val rightAnswer = sum - visibleNumber
         val options = HashSet<Int>()
+        val rightAnswer = sum - visibleNumber
         options.add(rightAnswer)
         val from = max(rightAnswer - countOfOption, MIN_VISIBLE_VALUE)
         val to = min(maxSumValue, rightAnswer + countOfOption)
@@ -29,30 +29,38 @@ object GameRepositoryImpl : GameRepository {
 
     override fun getGameSettings(level: Level): GameSettings {
         return when (level) {
-            Level.TEST -> GameSettings(
-                10,
-                4,
-                50,
-                10
-            )
-            Level.EASY -> GameSettings(
-                10,
-                10,
-                70,
-                60
-            )
-            Level.MEDIUM -> GameSettings(
-                30,
-                20,
-                80,
-                40
-            )
-            Level.HARD -> GameSettings(
-                100,
-                30,
-                95,
-                100
-            )
+            Level.TEST -> {
+                GameSettings(
+                    10,
+                    3,
+                    50,
+                    8
+                )
+            }
+            Level.EASY -> {
+                GameSettings(
+                    10,
+                    10,
+                    70,
+                    45
+                )
+            }
+            Level.MEDIUM -> {
+                GameSettings(
+                    20,
+                    20,
+                    80,
+                    60
+                )
+            }
+            Level.HARD -> {
+                GameSettings(
+                    50,
+                    30,
+                    90,
+                    120
+                )
+            }
         }
     }
 }
