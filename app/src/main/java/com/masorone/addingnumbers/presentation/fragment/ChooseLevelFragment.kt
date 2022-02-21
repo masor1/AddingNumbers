@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentChooseLevelBinding
 import com.masorone.addingnumbers.domain.entity.Level
+import com.masorone.addingnumbers.presentation.fragment.game.GameFragment
 
 class ChooseLevelFragment : Fragment() {
 

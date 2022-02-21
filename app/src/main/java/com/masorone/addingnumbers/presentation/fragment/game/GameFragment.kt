@@ -1,4 +1,4 @@
-package com.masorone.addingnumbers.presentation.fragment
+package com.masorone.addingnumbers.presentation.fragment.game
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -14,26 +14,29 @@ import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentGameBinding
 import com.masorone.addingnumbers.domain.entity.GameResult
 import com.masorone.addingnumbers.domain.entity.Level
+import com.masorone.addingnumbers.presentation.fragment.GameFinishedFragment
 
 class GameFragment : Fragment() {
 
     private lateinit var level: Level
+
+    private val viewModelFactory by lazy {
+        GameViewModelFactory(level, requireActivity().application)
+    }
+
     private val viewModel: GameViewModel by lazy {
-        ViewModelProvider(
-            this,
-            getInstance(requireActivity().application)
-        )[GameViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[GameViewModel::class.java]
     }
 
     private val tvOptions by lazy {
-        mutableListOf<TextView>().apply {
-            add(binding.tvOption1)
-            add(binding.tvOption2)
-            add(binding.tvOption3)
-            add(binding.tvOption4)
-            add(binding.tvOption5)
-            add(binding.tvOption6)
-        }
+        mutableListOf(
+            binding.tvOption1,
+            binding.tvOption2,
+            binding.tvOption3,
+            binding.tvOption4,
+            binding.tvOption5,
+            binding.tvOption6
+        )
     }
 
     private var _binding: FragmentGameBinding? = null
@@ -57,7 +60,6 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setupClickListenersToOptions()
-        viewModel.startGame(level)
     }
 
     private fun setupClickListenersToOptions() {
