@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.navigation.fragment.findNavController
 import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentGameFinishedBinding
 import com.masorone.addingnumbers.domain.entity.GameResult
-import com.masorone.addingnumbers.presentation.fragment.game.GameFragment
 
 class GameFinishedFragment : Fragment() {
 
@@ -35,8 +33,14 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupBackPressed()
+        setupClickListener()
         parseGameResult()
+    }
+
+    private fun setupClickListener() {
+        binding.buttonRetry.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun parseGameResult() {
@@ -69,23 +73,6 @@ class GameFinishedFragment : Fragment() {
             ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 
-    private fun setupBackPressed() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                retryGame()
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            callback
-        )
-
-        binding.buttonRetry.setOnClickListener {
-            retryGame()
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -95,13 +82,6 @@ class GameFinishedFragment : Fragment() {
         requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
             gameResult = it
         }
-    }
-
-    private fun retryGame() {
-        requireActivity().supportFragmentManager.popBackStack(
-            GameFragment.NAME,
-            POP_BACK_STACK_INCLUSIVE
-        )
     }
 
     companion object {
