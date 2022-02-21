@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentChooseLevelBinding
 import com.masorone.addingnumbers.domain.entity.Level
-import com.masorone.addingnumbers.presentation.fragment.game.GameFragment
 
 class ChooseLevelFragment : Fragment() {
 
@@ -44,13 +44,13 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGameFragment(level: Level) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFragment.newInstance(level))
-            .addToBackStack(GameFragment.NAME)
-            .commit()
+        val bundle = Bundle().apply { putParcelable(KEY_LEVEL, level) }
+        findNavController().navigate(R.id.action_chooseLevelFragment_to_gameFragment, bundle)
     }
 
     companion object {
+
+        private const val KEY_LEVEL = "key_level"
 
         const val NAME = "ChooseLevelFragment"
 

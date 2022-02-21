@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.getInstance
+import androidx.navigation.fragment.findNavController
 import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentGameBinding
 import com.masorone.addingnumbers.domain.entity.GameResult
 import com.masorone.addingnumbers.domain.entity.Level
-import com.masorone.addingnumbers.presentation.fragment.GameFinishedFragment
 
 class GameFragment : Fragment() {
 
@@ -122,15 +120,15 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult))
-            .addToBackStack(GameFinishedFragment.NAME)
-            .commit()
+        val bundle = Bundle().apply { putParcelable(KEY_GAME_RESULT, gameResult) }
+        findNavController().navigate(R.id.action_gameFragment_to_gameFinishedFragment, bundle)
     }
 
     companion object {
 
         const val NAME = "GameFragment"
+
+        private const val KEY_GAME_RESULT = "key_game_result"
 
         private const val KEY_LEVEL = "key_level"
 
