@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentGameFinishedBinding
 import com.masorone.addingnumbers.domain.entity.GameResult
+import com.masorone.addingnumbers.presentation.fragment.game.GameFragment
 
 class GameFinishedFragment : Fragment() {
 
