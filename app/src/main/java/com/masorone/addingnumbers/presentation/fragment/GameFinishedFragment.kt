@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentGameFinishedBinding
 import com.masorone.addingnumbers.domain.entity.GameResult
 
@@ -33,7 +34,41 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBackPressed()
+        parseGameResult()
+    }
 
+    private fun parseGameResult() {
+        val resId = if (gameResult.winner) R.drawable.ic_smile else R.drawable.ic_sad
+        with(binding) {
+            emojiResult.setImageResource(resId)
+            tvRequiredAnswers.text = String.format(
+                getString(R.string.required_score),
+                gameResult.gameSettings.minCountOfRightAnswers
+            )
+            tvScoreAnswers.text = String.format(
+                getString(R.string.score_answers),
+                gameResult.countOfRightAnswers
+            )
+            tvRequiredPercentage.text = String.format(
+                getString(R.string.required_percentage),
+                gameResult.gameSettings.minPercentOfRightAnswers
+            )
+            tvScorePercentage.text = String.format(
+                getString(R.string.score_percentage),
+                getPercentOfRightAnswer()
+            )
+        }
+    }
+
+    private fun getPercentOfRightAnswer() = with(gameResult) {
+        if (countOfQuestions == 0)
+            0
+        else
+            ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+    }
+
+    private fun setupBackPressed() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 retryGame()
