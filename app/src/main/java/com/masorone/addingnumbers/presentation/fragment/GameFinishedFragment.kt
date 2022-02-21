@@ -29,6 +29,7 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.gameResult = gameResult
         setupClickListener()
         parseGameResult()
     }
@@ -43,22 +44,22 @@ class GameFinishedFragment : Fragment() {
         val resId = if (gameResult.winner) R.drawable.ic_smile else R.drawable.ic_sad
         with(binding) {
             emojiResult.setImageResource(resId)
-            tvRequiredAnswers.text = String.format(
-                getString(R.string.required_score),
-                gameResult.gameSettings.minCountOfRightAnswers
-            )
-            tvScoreAnswers.text = String.format(
-                getString(R.string.score_answers),
-                gameResult.countOfRightAnswers
-            )
-            tvRequiredPercentage.text = String.format(
-                getString(R.string.required_percentage),
-                gameResult.gameSettings.minPercentOfRightAnswers
-            )
-            tvScorePercentage.text = String.format(
-                getString(R.string.score_percentage),
-                getPercentOfRightAnswer()
-            )
+//            tvRequiredAnswers.text = String.format(
+//                getString(R.string.required_score),
+//                gameResult.gameSettings.minCountOfRightAnswers
+//            )
+//            tvScoreAnswers.text = String.format(
+//                getString(R.string.score_answers),
+//                gameResult.countOfRightAnswers
+//            )
+//            tvRequiredPercentage.text = String.format(
+//                getString(R.string.required_percentage),
+//                gameResult.gameSettings.minPercentOfRightAnswers
+//            )
+//            tvScorePercentage.text = String.format(
+//                getString(R.string.score_percentage),
+//                getPercentOfRightAnswer()
+//            )
         }
     }
 
