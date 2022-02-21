@@ -6,21 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.masorone.addingnumbers.R
 import com.masorone.addingnumbers.databinding.FragmentGameFinishedBinding
-import com.masorone.addingnumbers.domain.entity.GameResult
 
 class GameFinishedFragment : Fragment() {
-
-    private lateinit var gameResult: GameResult
 
     private var _binding: FragmentGameFinishedBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseParams()
-    }
+    private val args by navArgs<GameFinishedFragmentArgs>()
+    private val gameResult by lazy { args.gameResult }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,24 +72,5 @@ class GameFinishedFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun parseParams() {
-        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
-            gameResult = it
-        }
-    }
-
-    companion object {
-
-        const val NAME = "GameFinishedFragment"
-
-        private const val KEY_GAME_RESULT = "key_game_result"
-
-        fun newInstance(gameResult: GameResult) = GameFinishedFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(KEY_GAME_RESULT, gameResult)
-            }
-        }
     }
 }
